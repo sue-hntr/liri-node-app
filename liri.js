@@ -53,30 +53,42 @@ if(process.argv[2] === "concert-this"){
 
 //    * `spotify-this-song`
 // 2. `node liri.js spotify-this-song '<song name here>'`
-if(process.argv[2] === "spotify-this-song"){
-    var song = process.argv[3];
-    spotify
-        .search({ type: 'track', query: song })
-        .then(function(response) {
-    //PUT CODE FOR RESPONSE INTO HERE OTHERWISE OUTSIDE OF SCOPE       
-            console.log("Artist's Name: ");
-            for (var j = 0; j < response.tracks.items[0].artists.length; j++){
-                console.log(response.tracks.items[0].artists[j].name);
-            }
-            console.log("Song's Name: " + response.tracks.items[0].name);
-            console.log("Album's Name: " + response.tracks.items[0].album.name);   
-        })
-        .catch(function(err) {
-        console.log(err);
-        });
-        }
+// DEFAULT FOR NO SONG IS "THE SIGN" BY ACE OF BASE
+// SINCE THERE ARE MULTIPLE RESULTS, I"VE USED THE API URI SEARCH FOR THE SONG
+if((process.argv[2] === "spotify-this-song") && (!process.argv[3])){
+   spotify
+    .request("https://api.spotify.com/v1/albums/5UwIyIyFzkM7wKeGtRJPgB")
+    .then(function(response) {
+      console.log(response.artists[0].name);
+      console.log(response.name);
+    })
+    .catch(function(err) {
+      console.error('Error occurred: ' + err); 
+    });
+} else if ((process.argv[2] === "spotify-this-song") && (process.argv[3])){
+            var song = process.argv.slice(3).join(" ");
+            spotify
+                .search({ type: 'track', query: song })
+                .then(function(response) {
+            //PUT CODE FOR RESPONSE INTO HERE OTHERWISE OUTSIDE OF SCOPE 
+                    console.log("Artist's Name: ");
+                    for (var j = 0; j < response.tracks.items[0].artists.length; j++){
+                        console.log(response.tracks.items[0].artists[j].name);
+                    }
+                    console.log("Song's Name: " + response.tracks.items[0].name);
+                    console.log("Album's Name: " + response.tracks.items[0].album.name);   
+                })
+                .catch(function(err) {
+                console.log(err);
+                });
+                }
+
+
 
 
 // THIS WORKS MAKE A COPY TO GET THE DEFAULT "THE SIGN"
-// if(process.argv[2] === "spotify-this-song"){
-//     var x = process.argv[3];
-//     console.log(x);
-//     var y = x.length;
-//     if(y=== 0){
-//         console.log("success");
-//     }}
+// if((process.argv[2] === "spotify-this-song") && (!process.argv[3])){
+//     console.log("The sign");
+// }else if ((process.argv[2] === "spotify-this-song") && (process.argv[3])){
+//     console.log(process.argv[3]);
+// }
