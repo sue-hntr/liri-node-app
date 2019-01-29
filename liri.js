@@ -66,29 +66,54 @@ if((process.argv[2] === "spotify-this-song") && (!process.argv[3])){
       console.error('Error occurred: ' + err); 
     });
 } else if ((process.argv[2] === "spotify-this-song") && (process.argv[3])){
-            var song = process.argv.slice(3).join(" ");
-            spotify
-                .search({ type: 'track', query: song })
-                .then(function(response) {
-            //PUT CODE FOR RESPONSE INTO HERE OTHERWISE OUTSIDE OF SCOPE 
-                    console.log("Artist's Name: ");
-                    for (var j = 0; j < response.tracks.items[0].artists.length; j++){
-                        console.log(response.tracks.items[0].artists[j].name);
-                    }
-                    console.log("Song's Name: " + response.tracks.items[0].name);
-                    console.log("Album's Name: " + response.tracks.items[0].album.name);   
-                })
-                .catch(function(err) {
-                console.log(err);
-                });
+        var song = process.argv.slice(3).join(" ");
+        spotify
+            .search({ type: 'track', query: song })
+            .then(function(response) {
+        //PUT CODE FOR RESPONSE INTO HERE OTHERWISE OUTSIDE OF SCOPE 
+                console.log("Artist's Name: ");
+                for (var j = 0; j < response.tracks.items[0].artists.length; j++){
+                    console.log(response.tracks.items[0].artists[j].name);
                 }
+                console.log("Song's Name: " + response.tracks.items[0].name);
+                console.log("Album's Name: " + response.tracks.items[0].album.name);   
+            })
+            .catch(function(err) {
+            console.log(err);
+            });
+            }
 
 
 
+// 3. `node liri.js movie-this '<movie name here>'`
+if((process.argv[2] === "movie-this") && (!process.argv[3])){
+    var movie = "Mr. Nobody";
+} else if ((process.argv[2] === "movie-this") && (!!process.argv[3])){
+    var movie = process.argv.slice(3).join(" ");
+}
+    var movieQueryUrl = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=1929ae9f";
+    // console.log(concertQueryUrl);
 
-// THIS WORKS MAKE A COPY TO GET THE DEFAULT "THE SIGN"
-// if((process.argv[2] === "spotify-this-song") && (!process.argv[3])){
-//     console.log("The sign");
-// }else if ((process.argv[2] === "spotify-this-song") && (process.argv[3])){
-//     console.log(process.argv[3]);
-// }
+    axios.get(movieQueryUrl).then(
+        function(response) {
+            var x = response.data;
+            var title = x.Title;
+            var year = x.Year;
+            var imdbRating = x.Ratings[0].Value;
+            var rtRating = x.Ratings[1].Value;
+            var country = x.Country;
+            var language = x.Language;
+            var plot = x.Plot;
+            var actors = x.Actors;
+            console.log(
+                "Title of the Movie: " + title +
+                "\nYear the movie came out: " + year +
+                "\nIMDB Rating: " + imdbRating +
+                "\nRotten Tomatoes Rating: " + rtRating +
+                "\nCountry Produced: " + country +
+                "\nLanguage(s): " + language +
+                "\nPlot: " + plot +
+                "\nActors: " + actors                 
+                ); //close console.log
+        } // close f response
+    ); // close axios
