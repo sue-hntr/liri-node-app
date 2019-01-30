@@ -4,6 +4,9 @@ require("dotenv").config();
 //use axios to commmunicate APIs
 var axios = require("axios");
 
+//use fs to access other files for search info in "do-what-it-says"
+var fs = require("fs");
+
 //use this info to hide your APIS
 var keys = require("./keys.js");
 
@@ -86,34 +89,62 @@ if((process.argv[2] === "spotify-this-song") && (!process.argv[3])){
 
 
 // 3. `node liri.js movie-this '<movie name here>'`
-if((process.argv[2] === "movie-this") && (!process.argv[3])){
-    var movie = "Mr. Nobody";
-} else if ((process.argv[2] === "movie-this") && (!!process.argv[3])){
-    var movie = process.argv.slice(3).join(" ");
-}
-    var movieQueryUrl = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=1929ae9f";
-    // console.log(concertQueryUrl);
+// if((process.argv[2] === "movie-this") && (!process.argv[3])){
+//     var movie = "Mr. Nobody";
+// } else if ((process.argv[2] === "movie-this") && (!!process.argv[3])){
+//     var movie = process.argv.slice(3).join(" ");
+// }
+//     var movieQueryUrl = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=1929ae9f";
+//     // console.log(concertQueryUrl);
 
-    axios.get(movieQueryUrl).then(
-        function(response) {
-            var x = response.data;
-            var title = x.Title;
-            var year = x.Year;
-            var imdbRating = x.Ratings[0].Value;
-            var rtRating = x.Ratings[1].Value;
-            var country = x.Country;
-            var language = x.Language;
-            var plot = x.Plot;
-            var actors = x.Actors;
-            console.log(
-                "Title of the Movie: " + title +
-                "\nYear the movie came out: " + year +
-                "\nIMDB Rating: " + imdbRating +
-                "\nRotten Tomatoes Rating: " + rtRating +
-                "\nCountry Produced: " + country +
-                "\nLanguage(s): " + language +
-                "\nPlot: " + plot +
-                "\nActors: " + actors                 
-                ); //close console.log
-        } // close f response
-    ); // close axios
+//     axios.get(movieQueryUrl).then(
+//         function(response) {
+//             var x = response.data;
+//             var title = x.Title;
+//             var year = x.Year;
+//             var imdbRating = x.Ratings[0].Value;
+//             var rtRating = x.Ratings[1].Value;
+//             var country = x.Country;
+//             var language = x.Language;
+//             var plot = x.Plot;
+//             var actors = x.Actors;
+//             console.log(
+//                 "Title of the Movie: " + title +
+//                 "\nYear the movie came out: " + year +
+//                 "\nIMDB Rating: " + imdbRating +
+//                 "\nRotten Tomatoes Rating: " + rtRating +
+//                 "\nCountry Produced: " + country +
+//                 "\nLanguage(s): " + language +
+//                 "\nPlot: " + plot +
+//                 "\nActors: " + actors                 
+//                 ); //close console.log
+//         } // close f response
+//     ); // close axios
+
+
+// 4. `node liri.js do-what-it-says` 
+if((process.argv[2] === "do-what-it-says") && (!process.argv[3])){
+
+//this reads the content of random.text and outputs:
+//spotify-this-song,"I Want it That Way" 
+    fs.readFile('random.txt', 'utf8', (err, data) => {
+        if (err) throw err;
+        console.log(data);
+        var stringRandom = data;
+// split the text into an array using , as divider
+        var arrayRandom = stringRandom.split(',');
+
+//check to see if the arrayRandom[1] contains " "
+        var doitAttr = arrayRandom[1].indexOf('"');
+        var x = arrayRandom[1].replace('"', '');
+        var y = x.replace('"', '');
+        console.log(y);
+        console.log("node " + arrayRandom[0] + " " + y); 
+      });  
+//takes the data from random.txt reads as string and splits it into an array
+
+
+//CREATE A SWITCH STATEMENT TO ACTIVATE THE DIFFERENT COMMANDS!!!
+
+
+} //close if do what it says
