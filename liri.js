@@ -34,11 +34,19 @@ switch(liriCommand) {
             //remove " " from arrayRandom[1] 2 times
                     var x = arrayRandom[1].replace('"', '');
                     var y = x.replace('"', '');
-                    console.log(y);
-                    console.log("node " + arrayRandom[0] + " " + y); 
+                    var z = arrayRandom[0];
+                    console.log("node " + z + " " + y);
+                    liriCommand =  z;
+                    liriTerm = y;
+                    console.log("DO-IT-COMMAND: " + liriCommand);
+                    console.log("DO-IT-TERM: " + liriTerm);
+                    
         //FINISH THIS!!! FINISH THIS!!! FINISH THIS!!! FINISH THIS!!!
+        
+
         //turn arrayRandom[0] into var liriCommand and y into var liriTerm
-                });  
+                }); 
+                return liriCommand; 
             } //close if do what it says
       break;
 
@@ -90,7 +98,7 @@ switch(liriCommand) {
             console.error('Error occurred: ' + err); 
             });
         } else if ((liriCommand === "spotify-this-song") && (liriTerm)){
-                var song = process.argv.slice(3).join(" ");
+                var song = liriTerm;
                 spotify
                     .search({ type: 'track', query: song })
                     .then(function(response) {
