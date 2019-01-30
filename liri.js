@@ -1,24 +1,72 @@
 //Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env.
 require("dotenv").config();
-
 //use axios to commmunicate APIs
 var axios = require("axios");
-
 //use fs to access other files for search info in "do-what-it-says"
 var fs = require("fs");
-
 //use this info to hide your APIS
 var keys = require("./keys.js");
-
 //declare moment.js
 var moment = require('moment');
 moment().format();
-
 //require node-spotify-api to access spotify with node
 var Spotify = require('node-spotify-api');
-
 //spotify has 2 keys
 var spotify = new Spotify(keys.spotify);  //does this refer to the keys.js or .env?
+
+
+var liriCommand = process.argv[2];
+
+
+switch(liriCommand) {
+    case "do-what-it-says":
+      console.log(a + b);
+      break;
+    case "concert-this":
+      console.log(a-b);
+      break;
+    case "spotify-this-song":
+      console.log(a * b);
+      break;
+    case "movie-this":
+      console.log(a/b);
+      break;
+  }
+
+
+
+
+
+if((process.argv[2] === "do-what-it-says") && (!process.argv[3])){
+    //this reads the content of random.text and outputs:
+    //spotify-this-song,"I Want it That Way" 
+        fs.readFile('random.txt', 'utf8', (err, data) => {
+            if (err) throw err;
+            console.log(data);
+            var stringRandom = data;
+            // split the text into an array using , as divider
+            var arrayRandom = stringRandom.split(',');
+    //check to see if the arrayRandom[1] contains " "
+            var doitAttr = arrayRandom[1].indexOf('"');
+     //remove " " from arrayRandom[1] 2 times
+            var x = arrayRandom[1].replace('"', '');
+            var y = x.replace('"', '');
+            console.log(y);
+            console.log("node " + arrayRandom[0] + " " + y); 
+        });  
+    
+    
+    //CREATE A SWITCH STATEMENT TO ACTIVATE THE DIFFERENT COMMANDS!!!
+    
+    
+    } //close if do what it says
+
+
+
+
+
+
+
 
 // COMPLETED CONCERT-THIS
 //  `node liri.js concert-this <artist/band name here>`
