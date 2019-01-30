@@ -11,17 +11,22 @@ var moment = require('moment');
 moment().format();
 //require node-spotify-api to access spotify with node
 var Spotify = require('node-spotify-api');
-//spotify has 2 keys
+//spotify has 2 keys                           
 var spotify = new Spotify(keys.spotify);  //does this refer to the keys.js or .env?
-
 
 var liriCommand = process.argv[2];
 var liriTerm = process.argv.slice(3).join(" ");
 
+
+
+
+
+var pick = function(liriCommand, liriTerm){
+
 switch(liriCommand) {
     case "do-what-it-says":
-        if((liriCommand === "do-what-it-says") && (!liriTerm )){
-            //this reads the content of random.text and outputs:
+    if((liriCommand === "do-what-it-says") && (!liriTerm )){
+    //this reads the content of random.text and outputs:
             //spotify-this-song,"I Want it That Way" 
                 fs.readFile('random.txt', 'utf8', (err, data) => {
                     if (err) throw err;
@@ -40,20 +45,15 @@ switch(liriCommand) {
                     liriTerm = y;
                     console.log("DO-IT-COMMAND: " + liriCommand);
                     console.log("DO-IT-TERM: " + liriTerm);
+                    pick (liriCommand, liriTerm);
                     
-        //FINISH THIS!!! FINISH THIS!!! FINISH THIS!!! FINISH THIS!!!
-        
-
-        //turn arrayRandom[0] into var liriCommand and y into var liriTerm
                 }); 
-                return liriCommand; 
             } //close if do what it says
-      break;
+            break;
 
-    case "concert-this":
-        //  `node liri.js concert-this <artist/band name here>`
-        if((liriCommand === "concert-this") && (!liriTerm)){
-            console.log("Liri Command 'Concert-This' requires an artist's name. Please try again.");
+case "concert-this":
+    if((liriCommand === "concert-this") && (!liriTerm)){
+    console.log("Liri Command 'Concert-This' requires an artist's name. Please try again.");
         } else if ((liriCommand === "concert-this") && (liriTerm)){
             var artist = liriTerm;
             var concertQueryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
@@ -80,11 +80,10 @@ switch(liriCommand) {
                 } //close function response 
             ); //get then
         } //close if concert-this
-    break;
+        break;
 
-
-    case "spotify-this-song":
-        // 2. `node liri.js spotify-this-song '<song name here>'`
+case "spotify-this-song":
+    // 2. `node liri.js spotify-this-song '<song name here>'`
         // DEFAULT FOR NO SONG IS "THE SIGN" BY ACE OF BASE
         // SINCE THERE ARE MULTIPLE RESULTS, I"VE USED THE API URI SEARCH FOR THE SONG
         if((liriCommand === "spotify-this-song") && (!liriTerm)){
@@ -114,10 +113,10 @@ switch(liriCommand) {
                     console.log(err);
                     });
             } //close if
-      break;
+            break;
+    
 
-      case "movie-this":
-            // 3. `node liri.js movie-this '<movie name here>'`
+    case "movie-this":
             if((liriCommand === "movie-this") && (!liriTerm)){
                 var movie = "Mr. Nobody";
             } else if ((liriCommand === "movie-this") && (liriTerm)){
@@ -149,9 +148,8 @@ switch(liriCommand) {
                             ); //close console.log
                     } // close f response
                 ); // close axios get
+                break;
+                }
+            }
 
-        break;
-  }
-
-
-
+pick(liriCommand, liriTerm);
