@@ -56,8 +56,16 @@ node liri spotify-this-song <song>
 node liri movie-this <movie name>
 node liri do-what-it-says 
 
-Sample results for these commands can be viewd at 
-(http://github.com/sue-hntr/liri-node-app/index.html)
+Sample results for these commands can be viewed in the following PNG files:
 
+"concert-this" - sample search for "Sting"
+"concert-this.png"
 
+"spotify-this-song" - sample search for "Sunflower"
+"spotify-this.png"
 
+"movie-this" - sample search for "Jaws"
+"movie-this.png"
+
+"do-what-it-says" (no parameters)
+"dowhat.png"
