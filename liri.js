@@ -30,7 +30,6 @@ switch(liriCommand) {
             //spotify-this-song,"I Want it That Way" 
                 fs.readFile('random.txt', 'utf8', (err, data) => {
                     if (err) throw err;
-                    console.log(data);
                     var stringRandom = data;
                     // split the text into an array using , as divider
                     var arrayRandom = stringRandom.split(',');
@@ -40,11 +39,8 @@ switch(liriCommand) {
                     var x = arrayRandom[1].replace('"', '');
                     var y = x.replace('"', '');
                     var z = arrayRandom[0];
-                    console.log("node " + z + " " + y);
                     liriCommand =  z;
                     liriTerm = y;
-                    console.log("DO-IT-COMMAND: " + liriCommand);
-                    console.log("DO-IT-TERM: " + liriTerm);
                     pick (liriCommand, liriTerm);
                     
                 }); 
